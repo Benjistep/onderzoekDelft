@@ -19,6 +19,9 @@ public:
     vector<double> getColumn(int column);
     QString getString(int row, int column) const;
     int size() const;
+    int rows() const;
+    int columns() const;
+    bool isEmpty(int row, int column) const;
 };
 
 #endif // CSVVECTOR_H

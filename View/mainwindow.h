@@ -16,16 +16,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString fileName();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_loadTable_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_MainWindow_iconSizeChanged(const QSize &iconSize);
+
+    void on_actionAdd_File_triggered();
 
 private:
     Ui::MainWindow *ui;
-    QString filename;
 };
 
 #endif // MAINWINDOW_H

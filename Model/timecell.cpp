@@ -2,10 +2,12 @@
 
 #include <stdlib.h>
 #include "TimeCell.h"
-#include "StringSplitter.h"
+#include "../Controller/StringSplitter.h"
 
 TimeCell::TimeCell(string& time): NameCell(time), hours(0), minutes(0), seconds(0)
 {
+    if(time.size() == 0)
+        setEmpty(true);
     parse();
 }
 
@@ -15,7 +17,7 @@ void TimeCell::parse()
 
      vector<string> parsedStrings;
 
-     if(name.size() == 7) {
+     if(name.size() == 8) {
          StringSplitter::splitString(name, ":", parsedStrings);
          hours = atoi(parsedStrings[0].c_str());
          minutes = atoi(parsedStrings[1].c_str());
@@ -40,7 +42,7 @@ int TimeCell::getSeconds() const
 
 QString TimeCell::toString()
 {
-    QString temp = QString::number(hours) + "-" + QString::number(minutes) + "-" + QString::number(seconds);
+    QString temp = QString::number(hours) + ":" + QString::number(minutes) + ":" + QString::number(seconds);
     return temp;
 }
 

@@ -4,6 +4,9 @@
 
 DataCell::DataCell(string &dataInput) : data(0)
 {
+    if(dataInput.size() == 0)
+        setEmpty(true);
+
     data = atof(dataInput.c_str());
 }
 

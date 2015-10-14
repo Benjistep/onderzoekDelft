@@ -1,10 +1,10 @@
 #include "CSVParser.h"
 #include "StringSplitter.h"
-#include "Cell.h"
-#include "NameCell.h"
-#include "DateCell.h"
-#include "TimeCell.h"
-#include "DataCell.h"
+#include "../Model/Cell.h"
+#include "../Model/NameCell.h"
+#include "../Model/DateCell.h"
+#include "../Model/TimeCell.h"
+#include "../Model/DataCell.h"
 
 void CSVParser::parseFile(ifstream* file, vector<vector<Cell*> >& data, const string& delimiter)
 {

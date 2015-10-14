@@ -9,6 +9,11 @@ class Cell
 public:
     virtual ~Cell() = 0;
     virtual QString toString() = 0;
+    bool isEmpty() const;
+    void setEmpty(bool empty);
+
+private:
+    bool empty;
 };
 
 #endif // CELL_H

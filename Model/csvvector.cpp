@@ -1,6 +1,6 @@
 #include <iostream>
 #include "CSVVector.h"
-#include "CSVParser.h"
+#include "../Controller/CSVParser.h"
 #include "DataCell.h"
 
 CSVVector::CSVVector(string file, string delimiter)
@@ -43,6 +43,21 @@ int CSVVector::size() const
         sum += data[i].size();
 
     return sum;
+}
+
+int CSVVector::rows() const
+{
+    return data.size();
+}
+
+int CSVVector::columns() const
+{
+    return data[0].size();
+}
+
+bool CSVVector::isEmpty(int row, int column) const
+{
+    return data[row][column]->isEmpty();
 }
 
 QString CSVVector::getString(int row, int column) const

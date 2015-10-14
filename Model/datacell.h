@@ -12,6 +12,7 @@ public:
     DataCell(string& data);
     float getData() const;
     QString toString();
+
 };
 
 

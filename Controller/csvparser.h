@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include "Cell.h"
+#include "../Model/Cell.h"
 
 using namespace std;
 

@@ -7,3 +7,12 @@ Cell::~Cell()
 {
 }
 
+bool Cell::isEmpty() const
+{
+    return empty;
+}
+
+
+void Cell::setEmpty(bool empty){
+    this->empty = empty;
+}

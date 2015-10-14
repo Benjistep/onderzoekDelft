@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include "DateCell.h"
-#include "StringSplitter.h"
+#include "../Controller/StringSplitter.h"
 
 DateCell::DateCell(string &date) : NameCell(date), day(0), month(0), year(0)
 {
+    if(date.size() == 0)
+        setEmpty(true);
     parse();
 }
 
@@ -13,7 +15,7 @@ void DateCell::parse()
 
     vector<string> parsedStrings;
 
-    if(date.size() == 8) {
+    if(date.size() <= 10) {
         StringSplitter::splitString(date, "-", parsedStrings);
         day = atoi(parsedStrings[0].c_str());
         month = atoi(parsedStrings[1].c_str());

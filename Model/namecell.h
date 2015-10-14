@@ -14,6 +14,7 @@ public:
     string getName() const;
     void setName(string& newName);
     QString toString();
+
 };
 
 #endif // NAMECELL_H

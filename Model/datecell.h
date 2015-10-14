@@ -18,6 +18,7 @@ public:
     int getMonth() const;
     int getYear() const;
     QString toString();
+
 };
 
 #endif // DATECELL_H

@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 #include <QTableView>
-#include "mymodel.h"
-#include "csvparser.h"
+#include "../Model/mymodel.h"
+#include "../Controller/csvparser.h"
 
 using namespace std;
 
@@ -15,29 +15,29 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    filename = QFileDialog::getOpenFileName(this, tr("Select a .csv file"), "C://", ".csv files (*.csv))");
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    //HALLLLLLLLLLLLOOOOOOOOOOOoo
-
 }
 
-QString MainWindow::fileName()
+
+void MainWindow::on_loadTable_clicked()
 {
-    return filename;
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select a .csv file"), "C://", ".csv files (*.csv))");
+    CSVVector data(filename.toStdString().c_str(), ";");
+    MyModel* model = new MyModel(0, data);
+    ui->tableView->setStyleSheet("QHeaderView::section {background-color:lightgrey}");
+    ui->tableView->setModel(model);
+
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_actionAdd_File_triggered()
 {
-
-
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select a .csv file"), "C://", ".csv files (*.csv))");
+    CSVVector data(filename.toStdString().c_str(), ";");
+    MyModel* model = new MyModel(0, data);
+    ui->tableView->setStyleSheet("QHeaderView::section {background-color:lightgrey}");
+    ui->tableView->setModel(model);
 }
-
-void MainWindow::on_pushButton_2_clicked()
-{
-}
-

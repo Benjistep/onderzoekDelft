@@ -12,7 +12,8 @@ using namespace std;
 class CSVParser {
 
 public:
-    static vector<vector<Cell*> >* parseFile(ifstream* file, const string& delimiter);
+    static void parseFile(ifstream* file, vector<vector<Cell*> >& data, const string& delimiter);
+
 };
 
 #endif // CSVPARSER_H

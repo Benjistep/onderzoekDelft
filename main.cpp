@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <string>
 #include <vector>
+#include "csvvector.h"
 
 using namespace std;
 
@@ -18,20 +19,10 @@ int main(int argc, char *argv[])
     //w.show();
     QString filetemp = w.fileName();
 
-
-
-    vector<vector<Cell*> >* data = CSVParser::parseFile(new ifstream((filetemp.toStdString()).c_str()), ";");
-    QString temp = QString::number(data->size());
-    MyModel* myModel = new MyModel(0, *data);
+    CSVVector data(filetemp.toStdString().c_str(), ";");
+    MyModel* myModel = new MyModel(0, data);
     tableView.setModel(myModel);
     tableView.show();
-
-    //vector<vector<Cell*> >* data = CSVParser::parseFile(new ifstream("D:\\Benjamin\\Desktop\\test.csv"), ";");
-    //MyModel myModel(0, *data);
-    //tableView.setModel(&myModel);
-    //tableView.show();
-
-
 
     return a.exec();
 }

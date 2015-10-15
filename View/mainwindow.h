@@ -18,11 +18,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_loadTable_clicked();
-
-    void on_MainWindow_iconSizeChanged(const QSize &iconSize);
 
     void on_actionAdd_File_triggered();
+
+    void on_actionTest_triggered();
+
+    void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -1,26 +1,15 @@
+#include <stdlib.h>
 #include "CSVParser.h"
 #include "StringSplitter.h"
-#include "../Model/Cell.h"
-#include "../Model/NameCell.h"
-#include "../Model/DateCell.h"
-#include "../Model/TimeCell.h"
 #include "../Model/DataCell.h"
+#include "datetimeparser.h"
 
-void CSVParser::parseFile(ifstream* file, vector<vector<Cell*> >& data, const string& delimiter)
+void CSVParser::parseFile(ifstream* file, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string& delimiter)
 {
     string line;
     //get all column names;
     getline((*file), line, '\n');
-    vector<string> tempVector;
-    StringSplitter::splitString(line, delimiter, tempVector);
-    vector<Cell*> columnNames;
-    for(int i = 0; i < tempVector.size(); i++)
-    {
-        columnNames.push_back(new NameCell(tempVector[i]));
-    }
-
-    //adds columnNames to dataVector
-    data.push_back(columnNames);
+    StringSplitter::splitString(line, delimiter, columnHeaders);
 
 
     //gets rest of file
@@ -30,20 +19,18 @@ void CSVParser::parseFile(ifstream* file, vector<vector<Cell*> >& data, const st
         //splits line into multiple strings puts in to tempVector
         StringSplitter::splitString(line, delimiter, tempVector);
 
-        //temp cellVector (1 row)
-        vector<Cell*> cellVector;
-        //adds datecell and timecell to row
-        cellVector.push_back(new DateCell(tempVector[0]));
-        cellVector.push_back(new TimeCell(tempVector[1]));
 
-        ////adds other cells as data
+        //adds datecell and timecell to rowHeaders
+        QDateTime dateTime;
+        DateTimeParser::parseDateTime(tempVector[0], tempVector[1], dateTime);
+        rowHeaders.push_back(dateTime);
+
+        vector<DataCell> tempData;
+        //adds other cells as data
         for(int i = 2; i < tempVector.size(); i++)
-        {
-            cellVector.push_back(new DataCell(tempVector[i]));
-        }
+            tempData.push_back(DataCell(tempVector[i]));
 
-        //adds row to datavector
-        data.push_back(cellVector);
+        data.push_back(tempData);
+
     }
-
 }

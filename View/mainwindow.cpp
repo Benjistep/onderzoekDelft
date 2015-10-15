@@ -23,21 +23,23 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_loadTable_clicked()
-{
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a .csv file"), "C://", ".csv files (*.csv))");
-    CSVVector data(filename.toStdString().c_str(), ";");
-    MyModel* model = new MyModel(0, data);
-    ui->tableView->setStyleSheet("QHeaderView::section {background-color:lightgrey}");
-    ui->tableView->setModel(model);
-
-}
-
 void MainWindow::on_actionAdd_File_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a .csv file"), "C://", ".csv files (*.csv))");
     CSVVector data(filename.toStdString().c_str(), ";");
+    //data.fillEmptyCells();
     MyModel* model = new MyModel(0, data);
+
     ui->tableView->setStyleSheet("QHeaderView::section {background-color:lightgrey}");
     ui->tableView->setModel(model);
+}
+
+void MainWindow::on_actionTest_triggered()
+{
+
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    this->close();
 }

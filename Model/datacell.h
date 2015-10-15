@@ -1,17 +1,22 @@
 #ifndef DATACELL_H
 #define DATACELL_H
 
-#include "Cell.h"
 using namespace std;
 
-class DataCell : public Cell{
+#include <QString>
+
+class DataCell {
 private:
     float data;
+    bool empty;
 
 public:
     DataCell(string& data);
+    void setData(float data);
     float getData() const;
-    QString toString();
+    QString toString() const;
+    bool isEmpty() const;
+    void setEmpty(bool empty);
 
 };
 

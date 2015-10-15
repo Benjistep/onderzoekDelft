@@ -14,25 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         View\mainwindow.cpp\
-	Model\cell.cpp\
 	Controller\csvparser.cpp\
 	Model\datacell.cpp\
-	Model\datecell.cpp\
 	Model\mymodel.cpp\
-	Model\namecell.cpp\
 	Controller\stringsplitter.cpp\
-	Model\timecell.cpp\
-    	Model\csvvector.cpp
+    	Model\csvvector.cpp \
+    	Controller\datetimeparser.cpp
 
 HEADERS  += View\mainwindow.h\
-	Model\cell.h\
 	Controller\csvparser.h\
 	Model\datacell.h\
-	Model\datecell.h\
 	Model\mymodel.h\
-	Model\namecell.h\
 	Controller\stringsplitter.h\
-	Model\timecell.h\
-    	Model\csvvector.h
+    	Model\csvvector.h \
+    	Controller\datetimeparser.h
 
 FORMS    += View\mainwindow.ui

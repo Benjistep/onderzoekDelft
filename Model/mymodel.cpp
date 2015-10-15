@@ -11,18 +11,18 @@ MyModel::MyModel(QObject *parent, CSVVector& data) : QAbstractTableModel(parent)
 
 int MyModel::rowCount(const QModelIndex &parent) const
 {
-    return modelData.rows()-1;
+    return modelData.rows();
 }
 
 int MyModel::columnCount(const QModelIndex &parent) const
 {
-        return modelData.columns()-2;
+        return modelData.columns();
 }
 
 QVariant MyModel::data(const QModelIndex &index, int role) const
 {
-    int row = index.row() + 1;
-    int column = index.column() + 2;
+    int row = index.row();
+    int column = index.column();
 
     if (role == Qt::DisplayRole && !modelData.isEmpty(row,column))
         return modelData.getString(row, column);
@@ -36,10 +36,10 @@ QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role)
     switch(role){
         case Qt::DisplayRole :
                 if(orientation == Qt::Horizontal){
-                    return modelData.getString(0, section+2);
+                    return modelData.getColumnHeader(section);
                 }
                 else if(orientation == Qt::Vertical){
-                    QString temp = modelData.getString(section + 1, 0) + " - " + modelData.getString(section + 1, 1);
+                    QString temp = modelData.getRowHeader(section);
                     return temp;
                 }
             break;
@@ -47,7 +47,5 @@ QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role)
         default:
             return QVariant();
     }
-
-    //return QVariant();
 
 }

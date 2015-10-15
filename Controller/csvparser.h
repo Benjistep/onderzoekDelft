@@ -1,18 +1,18 @@
 #ifndef CSVPARSER_H
 #define CSVPARSER_H
 
-
 #include <vector>
 #include <string>
 #include <fstream>
-#include "../Model/Cell.h"
+#include <QDateTime>
+#include "../Model/datacell.h"
 
 using namespace std;
 
 class CSVParser {
 
 public:
-    static void parseFile(ifstream* file, vector<vector<Cell*> >& data, const string& delimiter);
+    static void parseFile(ifstream* file, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string& delimiter);
 
 };
 

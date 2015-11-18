@@ -3,8 +3,6 @@
 #include <iostream>
 #include <QDateTime>
 
-
-
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -15,6 +13,7 @@ int main(int argc, char *argv[])
 
     //QDateTime test();
     //test.
+    cout << "test";
 
     return a.exec();
 }

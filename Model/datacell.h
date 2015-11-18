@@ -17,7 +17,6 @@ public:
     QString toString() const;
     bool isEmpty() const;
     void setEmpty(bool empty);
-
 };
 
 

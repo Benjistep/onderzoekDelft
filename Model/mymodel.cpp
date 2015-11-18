@@ -48,4 +48,6 @@ QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role)
             return QVariant();
     }
 
+    return QVariant();
+
 }

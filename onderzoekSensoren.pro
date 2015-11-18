@@ -8,6 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+
 TARGET = onderzoekSensoren
 TEMPLATE = app
 
@@ -27,6 +28,10 @@ HEADERS  += View\mainwindow.h\
 	Model\mymodel.h\
 	Controller\stringsplitter.h\
     	Model\csvvector.h \
-    	Controller\datetimeparser.h
+        Controller\datetimeparser.h\
+        Bayes\bayes_utils.h\
+        Bayes\directed_graph.h\
+        Bayes\graph.h\
+        Bayes\graph_utils.h\
 
 FORMS    += View\mainwindow.ui

@@ -20,7 +20,7 @@ private:
     bool isBooleanColumn(int column);
     void fillBooleanColumn(int column);
     void fillColumn(int column);
-    float getValueOfNextNotEmptyCell(int startRow, int column);
+    bool elementExists(int row, int column) const;
 
 public:
     CSVVector(string file, string delimiter);

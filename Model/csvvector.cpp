@@ -10,13 +10,19 @@ CSVVector::CSVVector(string file, string delimiter)
 
 float CSVVector::get(int row, int column)
 {
-    return data[row][column].getData();
+    if(elementExists(row, column))
+        return data[row][column].getData();
+    else
+        return numeric_limits<double>::quiet_NaN();
 }
 
 void CSVVector::set(int row, int column, float value)
 {
-    data[row][column].setData(value);
-    data[row][column].setEmpty(false);
+    if(elementExists(row, column))
+    {
+        data[row][column].setData(value);
+        data[row][column].setEmpty(false);
+    }
 }
 
 int CSVVector::rows() const
@@ -39,22 +45,34 @@ int CSVVector::size() const
 
 bool CSVVector::isEmpty(int row, int column) const
 {
-    return data[row][column].isEmpty();
+    if(elementExists(row, column))
+        return data[row][column].isEmpty();
+    else
+        return false;
 }
 
 QString CSVVector::getString(int row, int column) const
 {
-    return data[row][column].toString();
+    if(elementExists(row, column))
+        return data[row][column].toString();
+    else
+        return QString("Not available");
 }
 
 QString CSVVector::getColumnHeader(int column) const
 {
-    return QString::fromStdString(columnHeaders[column+2]);
+    if(column >= columnHeaders.size())
+        return QString("Not available");
+    else
+        return QString::fromStdString(columnHeaders[column+2]);
 }
 
 QString CSVVector::getRowHeader(int row) const
 {
-    return rowHeaders[row].toString("ddd d MMMM yy - hh:mm");
+    if(row >= rowHeaders.size())
+        return QString("Not available");
+    else
+        return rowHeaders[row].toString("ddd d MMMM yy - hh:mm");
 }
 
 const vector<vector<DataCell> >& CSVVector::getData() const
@@ -90,7 +108,14 @@ void CSVVector::fillEmptyCells()
 
 bool CSVVector::isBooleanColumn(int column)
 {
-  return booleanColumns[column];
+    if(column >= booleanColumns.size())
+    {
+        return false;
+    }
+    else
+    {
+        return booleanColumns[column];
+    }
 }
 
 void CSVVector::setBooleanColumn(int column)
@@ -163,23 +188,25 @@ void CSVVector::fillColumn(int column)
     }
 }
 
-float CSVVector::getValueOfNextNotEmptyCell(int startRow, int column)
-{
-    float data = -1;
-    for(int row = startRow; row < rows(); row++)
-    {
-        if(!isEmpty(row, column))
-            data = get(row, column);
-
-        if(data != -1)
-            break;
-    }
-
-    return data;
-}
-
 void CSVVector::removeRow(int row)
 {
-    data.erase(data.begin() + row);
+    if(row >= data.size())
+    {
+        data.erase(data.begin() + row);
+    }
 }
 
+bool CSVVector::elementExists(int row, int column) const
+{
+    bool exists = true;
+    if(row >= data.size())
+    {
+        exists = false;
+    }
+    else if(column >= data[row].size())
+    {
+        exists = false;
+    }
+
+    return exists;
+}

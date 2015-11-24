@@ -32,7 +32,7 @@ void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<D
     //get all column names;
     getline((*file), line, '\n');
     StringSplitter::splitString(line, delimiter, columnHeaders);
-
+/*
     //gets rest of file
     while(getline((*file), line, '\n'))
     {
@@ -52,6 +52,7 @@ void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<D
 
         data.push_back(tempData);
     }
+    */
 }
 
 

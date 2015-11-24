@@ -30,7 +30,10 @@ void CSVWriter::write(CSVVector &csvvector, string outputFileName)
                 }
                 else if(column > 1)
                 {
-                    writer << data[row - 1][column - 2].getData() << ";";
+                    if(!data[row - 1][column - 2].isEmpty())
+                        writer << data[row - 1][column - 2].getData();;
+
+                    writer << ";";
                 }
             }
         }

@@ -7,7 +7,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+CONFIG += c++11
 
 TARGET = onderzoekSensoren
 TEMPLATE = app
@@ -20,7 +20,8 @@ SOURCES += main.cpp\
 	Model\mymodel.cpp\
 	Controller\stringsplitter.cpp\
     	Model\csvvector.cpp \
-    	Controller\datetimeparser.cpp
+    	Controller\datetimeparser.cpp \
+    Controller/csvwriter.cpp
 
 HEADERS  += View\mainwindow.h\
 	Controller\csvparser.h\
@@ -33,5 +34,8 @@ HEADERS  += View\mainwindow.h\
         Bayes\directed_graph.h\
         Bayes\graph.h\
         Bayes\graph_utils.h\
+    Controller/csvwriter.h
 
 FORMS    += View\mainwindow.ui
+
+DISTFILES +=

@@ -3,9 +3,31 @@
 #include "StringSplitter.h"
 #include "../Model/DataCell.h"
 #include "datetimeparser.h"
+#include <iostream>
 
-void CSVParser::parseFile(ifstream* file, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string& delimiter)
+
+void CSVParser::parseConfigFile(string file, map<int, bool>& booleanColumns)
 {
+    if(!ifstream(file.c_str()))
+    {
+        cout << "new config file created!";
+        ofstream newFile;
+        newFile.open(file.c_str());
+    }
+
+    string line;
+    ifstream configFile(file.c_str());
+    while(getline(configFile, line, '\n'))
+    {
+        int temp = atoi(line.c_str());
+        booleanColumns[temp] = true;
+    }
+}
+
+void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns)
+{
+    parseConfigFile(configFileName, booleanColumns);
+
     string line;
     //get all column names;
     getline((*file), line, '\n');
@@ -31,3 +53,5 @@ void CSVParser::parseFile(ifstream* file, vector<vector<DataCell> >& data, vecto
         data.push_back(tempData);
     }
 }
+
+

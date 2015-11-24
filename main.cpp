@@ -11,9 +11,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    //QDateTime test();
-    //test.
-    cout << "test";
-
     return a.exec();
 }

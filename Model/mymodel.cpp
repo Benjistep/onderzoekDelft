@@ -6,7 +6,6 @@
 
 MyModel::MyModel(QObject *parent, CSVVector& data) : QAbstractTableModel(parent), modelData(data)
 {
-
 }
 
 int MyModel::rowCount(const QModelIndex &parent) const
@@ -16,7 +15,7 @@ int MyModel::rowCount(const QModelIndex &parent) const
 
 int MyModel::columnCount(const QModelIndex &parent) const
 {
-        return modelData.columns();
+        return modelData.columns() - 1;
 }
 
 QVariant MyModel::data(const QModelIndex &index, int role) const
@@ -40,6 +39,7 @@ QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role)
                 }
                 else if(orientation == Qt::Vertical){
                     QString temp = modelData.getRowHeader(section);
+                    //cout << temp.toStdString();
                     return temp;
                 }
             break;

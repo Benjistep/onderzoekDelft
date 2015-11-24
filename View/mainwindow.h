@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableView>
 #include <QString>
+#include "../Model/csvvector.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,8 +26,21 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionSafe_data_triggered();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
 private:
     Ui::MainWindow *ui;
+    CSVVector* csvvector;
 };
 
 #endif // MAINWINDOW_H

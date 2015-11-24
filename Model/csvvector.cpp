@@ -5,12 +5,18 @@
 
 CSVVector::CSVVector(string file, string delimiter)
 {
-    CSVParser::parseFile(new ifstream(file.c_str()), data, columnHeaders, rowHeaders, delimiter);
+    CSVParser::parseFile(new ifstream(file.c_str()), "config.txt", data, columnHeaders, rowHeaders, delimiter, booleanColumns);
 }
 
 float CSVVector::get(int row, int column)
 {
     return data[row][column].getData();
+}
+
+void CSVVector::set(int row, int column, float value)
+{
+    data[row][column].setData(value);
+    data[row][column].setEmpty(false);
 }
 
 int CSVVector::rows() const
@@ -48,58 +54,132 @@ QString CSVVector::getColumnHeader(int column) const
 
 QString CSVVector::getRowHeader(int row) const
 {
-    return rowHeaders[row].toString("ddd d MMMM yyyy - hh:mm");
+    return rowHeaders[row].toString("ddd d MMMM yy - hh:mm");
 }
 
-/*
+const vector<vector<DataCell> >& CSVVector::getData() const
+{
+    return data;
+}
+
+const vector<string>& CSVVector::getColumnHeaders() const
+{
+    return columnHeaders;
+}
+
+const vector<QDateTime>& CSVVector::getRowHeaders() const
+{
+    return rowHeaders;
+}
+
 void CSVVector::fillEmptyCells()
 {
-    cout << "empty: " << isEmpty(376, 3) << endl;
-    cout << "empty: " << isEmpty(377, 3) << endl;
-    cout << "empty: " << isEmpty(378, 3) << endl;
     //vul bij alle kolommen behalve de eerste twee alle lege velden
-    for(int column = 2; column < columns(); column++)
+    for(int column = 0; column < columns(); column++)
     {
-        //controleer eerst of er alleen 0 of 1 (PIR) waardes ingevuld moeten worden of verschillende waardes C02
-      bool booleanCell = true;
-      //loop de volledige kolom door van boven naar beneden
-      for(int row = 1; row < rows(); row++)
-      {
-          float tempData = ((DataCell*)data[row][column])->getData();
-          //if(column == 3 && (tempData == 1.0 || tempData == 0.0))
-             // cout << row << endl;
-
-          if(!(tempData == 0.0 || tempData == 1.0) && column == 3){
-              booleanCell = false;
-              cout << column << " r " << row << endl;
-          }
-      }
-
-      //vul de lege cellen met een 1 of een nul
-      if(booleanCell){
-          cout << "hoi" << column << endl;
-          for(int row = 1; row < rows(); row++)
-          {
-              if(isEmpty(row, column))
-              {
-                  if(column == 3 && row <= 500)
-                  cout << "row " << row << " column " << column << endl;
-                  if(row == 1)
-                  {
-                       // cout << "hoi" << column << " r: " << row<<  endl;
-                      ((DataCell*)data[row][column])->setData(0.0);
-                       data[row][column]->setEmpty(false);
-                  }
-                  else
-                  {
-                      ((DataCell*)data[row][column])->setData(((DataCell*)data[row-1][column])->getData());
-                      data[row][column]->setEmpty(false);
-                  }
-              }
-
-          }
-      }
-
+        if(isBooleanColumn(column))
+        {
+            fillBooleanColumn(column);
+        }
+        else
+        {
+            fillColumn(column);
+        }
     }
 }
-*/
+
+bool CSVVector::isBooleanColumn(int column)
+{
+  return booleanColumns[column];
+}
+
+void CSVVector::setBooleanColumn(int column)
+{
+    booleanColumns[column] = true;
+}
+
+void CSVVector::removeBooleanColumn(int column)
+{
+    map<int, bool>::iterator it = booleanColumns.find(column);
+    booleanColumns.erase(it);
+}
+
+const map<int, bool>& CSVVector::getBooleanColumns() const
+{
+    return booleanColumns;
+}
+
+void CSVVector::fillBooleanColumn(int column)
+{
+    for(int row = 0; row < rows(); row++)
+    {
+        float opvulWaarde = 0.0;
+        if(isEmpty(row, column))
+        {
+
+            if(row == 0)
+            {
+              set(row, column, opvulWaarde);
+
+            }
+            else if(row > 0)
+            {
+                opvulWaarde = get(row - 1, column);
+                set(row, column, opvulWaarde);
+            }
+        }
+        else if(get(row, column) > 0.0)
+        {
+            opvulWaarde = 1.0;
+            set(row, column, opvulWaarde);
+        }
+    }
+}
+
+void CSVVector::fillColumn(int column)
+{
+    for(int row = 0; row < rows(); row++)
+    {
+        float opvulWaarde = 0.0;
+        if(isEmpty(row, column))
+        {
+            if(row == 0)
+            {
+                set(row, column, opvulWaarde);
+            }
+            else if (row < (rows() - 1) && !isEmpty(row + 1, column))
+            {
+                //opvulwaarde wordt gemiddelde van waarde van de rij erboven en de eerst volgende gevulde rij eronder
+                opvulWaarde = (get(row - 1, column) + get(row + 1, column)) / 2;
+                set(row, column, opvulWaarde);
+            }
+            //laatste element van de rij
+            else if (row == (rows() - 1) || (row < (rows() - 1) && isEmpty(row + 1, column)))
+            {
+                opvulWaarde = get(row - 1, column);
+                set(row, column, opvulWaarde);
+            }
+        }
+    }
+}
+
+float CSVVector::getValueOfNextNotEmptyCell(int startRow, int column)
+{
+    float data = -1;
+    for(int row = startRow; row < rows(); row++)
+    {
+        if(!isEmpty(row, column))
+            data = get(row, column);
+
+        if(data != -1)
+            break;
+    }
+
+    return data;
+}
+
+void CSVVector::removeRow(int row)
+{
+    data.erase(data.begin() + row);
+}
+

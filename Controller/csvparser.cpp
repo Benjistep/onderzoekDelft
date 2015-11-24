@@ -24,15 +24,16 @@ void CSVParser::parseConfigFile(string file, map<int, bool>& booleanColumns)
     }
 }
 
-void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns)
+bool CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns)
 {
+    bool success = true;
     parseConfigFile(configFileName, booleanColumns);
 
     string line;
     //get all column names;
     getline((*file), line, '\n');
     StringSplitter::splitString(line, delimiter, columnHeaders);
-/*
+
     //gets rest of file
     while(getline((*file), line, '\n'))
     {
@@ -42,7 +43,7 @@ void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<D
 
         //adds datecell and timecell to rowHeaders
         QDateTime dateTime;
-        DateTimeParser::parseDateTime(tempVector[0], tempVector[1], dateTime);
+        success = DateTimeParser::parseDateTime(tempVector[0], tempVector[1], dateTime);
         rowHeaders.push_back(dateTime);
 
         vector<DataCell> tempData;
@@ -52,7 +53,8 @@ void CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<D
 
         data.push_back(tempData);
     }
-    */
+
+    return success;
 }
 
 

@@ -17,6 +17,8 @@ private:
     vector<QDateTime> rowHeaders;
     map<int, bool> booleanColumns;
 
+    bool success;
+
     bool isBooleanColumn(int column);
     void fillBooleanColumn(int column);
     void fillColumn(int column);
@@ -41,6 +43,7 @@ public:
     void setBooleanColumn(int column);
     void removeBooleanColumn(int column);
     void removeRow(int row);
+    bool parsedSuccessfully();
 };
 
 #endif // CSVVECTOR_H

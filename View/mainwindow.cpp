@@ -10,6 +10,7 @@
 #include "../Controller/csvwriter.h"
 #include <fstream>
 #include <QDateTime>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -48,6 +49,7 @@ void MainWindow::on_actionAdd_File_triggered()
         ui->spinBox->setMinimum(1);
         ui->spinBox->setMaximum(csvvector->columns() - 1);
 
+
         map<int, bool> booleanColumns = csvvector->getBooleanColumns();
         map<int, bool>::const_iterator it = booleanColumns.begin();
 
@@ -56,7 +58,17 @@ void MainWindow::on_actionAdd_File_triggered()
             ui->comboBox->addItem(QString::number(it->first));
             it++;
         }
+
+        //show messagebox
+        string message = "";
+        if(csvvector->parsedSuccessfully())
+            message = "File added successfully!";
+        else
+            message = "File added with errors. File may be corrupted.";
+
+        QMessageBox::information(this, tr("File add"), tr(message.c_str()));
     }
+
 }
 
 void MainWindow::on_actionTest_triggered()

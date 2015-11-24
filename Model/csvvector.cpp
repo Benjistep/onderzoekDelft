@@ -5,7 +5,7 @@
 
 CSVVector::CSVVector(string file, string delimiter)
 {
-    CSVParser::parseFile(new ifstream(file.c_str()), "config.txt", data, columnHeaders, rowHeaders, delimiter, booleanColumns);
+    success = CSVParser::parseFile(new ifstream(file.c_str()), "config.txt", data, columnHeaders, rowHeaders, delimiter, booleanColumns);
 }
 
 float CSVVector::get(int row, int column)
@@ -61,7 +61,7 @@ QString CSVVector::getString(int row, int column) const
 
 QString CSVVector::getColumnHeader(int column) const
 {
-    if(column >= columnHeaders.size())
+    if(column >= columnHeaders.size() || column + 2 >= columnHeaders.size())
         return QString("Not available");
     else
         return QString::fromStdString(columnHeaders[column+2]);
@@ -209,4 +209,9 @@ bool CSVVector::elementExists(int row, int column) const
     }
 
     return exists;
+}
+
+bool CSVVector::parsedSuccessfully()
+{
+    return success;
 }

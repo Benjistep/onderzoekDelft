@@ -132,7 +132,6 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-
     int startuur = ui->horizontalSlider->value();
     int stopuur = ui->horizontalSlider_2->value();
 
@@ -147,6 +146,10 @@ void MainWindow::on_pushButton_5_clicked()
             else if(rowHeaders[i].toString("hh").toInt() > stopuur)
             {
                 ui->tableView->hideRow(i);
+            }
+            else if(ui->tableView->isRowHidden(i))
+            {
+                ui->tableView->showRow(i);
             }
         }
 

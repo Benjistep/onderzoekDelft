@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 3.5.0, 2015-11-24T02:19:07. -->
-=======
-<!-- Written by QtCreator 3.5.0, 2015-11-18T11:33:48. -->
->>>>>>> origin/master
+<!-- Written by QtCreator 3.5.0, 2015-11-24T02:32:36. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{1a9f38bb-2906-4571-8c97-ecdeb4a904be}</value>
+  <value type="QByteArray">{0c2b7a32-968f-4b88-9355-37e8dbc3e10f}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -231,8 +227,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">onderzoekSensoren</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Christiaan/Documents/GitHub/onderzoekDelft/onderzoekSensoren.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">onderzoekSensoren2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/Benjamin/Documents/GitHub/onderzoekDelft/onderzoekSensoren.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">onderzoekSensoren.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

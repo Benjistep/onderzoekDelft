@@ -11,6 +11,10 @@
 #include <fstream>
 #include <QDateTime>
 #include <QMessageBox>
+#include "Controller/deviation.h"
+#include "Controller/sum.h"
+#include "Controller/variance.h"
+#include "Controller/average.h"
 
 using namespace std;
 
@@ -164,7 +168,13 @@ void MainWindow::on_pushButton_5_clicked()
                 ui->tableView->showRow(i);
             }
         }
-
-        cout << csvvector->rows();
     }
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    cout << "Som" << Sum::calc(380, 392, 0, 0, *csvvector) << endl;
+    cout << "Gemiddelde" << Average::calc(380, 392, 0, 0, *csvvector) << endl;
+    cout << "Variantie" << Variance::calc(380, 392, 0, 0, *csvvector) << endl;
+    cout << "Deviatie" << Deviation::calc(380, 392, 0, 0, *csvvector) << endl;
 }

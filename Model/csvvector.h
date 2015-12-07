@@ -25,16 +25,23 @@ private:
     bool elementExists(int row, int column) const;
 
 public:
+
+    CSVVector();
     CSVVector(string file, string delimiter);
     float get(int row, int column);
     void set(int row, int column, float value);
     QString getString(int row, int column) const;
     QString getColumnHeader(int column) const;
+    void setColumnHeader(int column, const string& newname);
     QString getRowHeader(int row) const;
     const map<int, bool>& getBooleanColumns() const;
+    void setBooleanColumns(map<int, bool>& columns);
     const vector<vector<DataCell> >& getData() const;
+    void setData(vector<vector<DataCell> >& data);
     const vector<string>& getColumnHeaders() const;
+    void setColumnHeaders(vector<string>& columnHeads);
     const vector<QDateTime>& getRowHeaders() const;
+
     int size() const;
     int rows() const;
     int columns() const;

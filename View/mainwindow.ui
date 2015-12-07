@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>true</bool>
@@ -33,106 +33,15 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Diagram</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2"/>
-      </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>Settings</string>
        </attribute>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>60</y>
-          <width>81</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>BooleanColumn</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>170</y>
-          <width>101</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Fill Empty Cells</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>90</y>
-          <width>51</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Add</string>
-        </property>
-       </widget>
-       <widget class="QSpinBox" name="spinBox">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>90</y>
-          <width>42</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>120</y>
-          <width>121</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Safe to startup config</string>
-        </property>
-       </widget>
-       <widget class="QComboBox" name="comboBox">
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>90</y>
-          <width>71</width>
-          <height>21</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>90</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Remove</string>
-        </property>
-       </widget>
        <widget class="QSlider" name="horizontalSlider">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>90</y>
+          <x>30</x>
+          <y>60</y>
           <width>160</width>
           <height>22</height>
          </rect>
@@ -150,8 +59,8 @@
        <widget class="QSlider" name="horizontalSlider_2">
         <property name="geometry">
          <rect>
-          <x>600</x>
-          <y>90</y>
+          <x>220</x>
+          <y>60</y>
           <width>160</width>
           <height>22</height>
          </rect>
@@ -169,8 +78,8 @@
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>60</y>
+          <x>30</x>
+          <y>30</y>
           <width>47</width>
           <height>13</height>
          </rect>
@@ -182,8 +91,8 @@
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>600</x>
-          <y>60</y>
+          <x>220</x>
+          <y>30</y>
           <width>47</width>
           <height>13</height>
          </rect>
@@ -195,8 +104,8 @@
        <widget class="QPushButton" name="pushButton_5">
         <property name="geometry">
          <rect>
-          <x>540</x>
-          <y>130</y>
+          <x>160</x>
+          <y>100</y>
           <width>75</width>
           <height>23</height>
          </rect>
@@ -205,24 +114,22 @@
          <string>Apply</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QCheckBox" name="checkBox">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>460</y>
-          <width>75</width>
-          <height>23</height>
+          <x>30</x>
+          <y>100</y>
+          <width>111</width>
+          <height>17</height>
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Ignore Weekends</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
-      </widget>
-      <widget class="QWidget" name="tab_4">
-       <attribute name="title">
-        <string>Analysis</string>
-       </attribute>
       </widget>
      </widget>
     </item>
@@ -258,7 +165,18 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionTest"/>
+    <widget class="QMenu" name="menuSet_Column_To_Type">
+     <property name="title">
+      <string>Set Column To Type</string>
+     </property>
+     <addaction name="actionCO2_Sensor"/>
+     <addaction name="actionPIR_Sensor"/>
+     <addaction name="actionAirflow"/>
+     <addaction name="actionLightstate"/>
+     <addaction name="actionTemperature"/>
+    </widget>
+    <addaction name="menuSet_Column_To_Type"/>
+    <addaction name="actionFill_Empty_Cells"/>
    </widget>
    <addaction name="menuOnderzoek_Delft"/>
    <addaction name="menuOptions"/>
@@ -266,17 +184,6 @@
   <action name="actionAdd_File">
    <property name="text">
     <string>Add File</string>
-   </property>
-  </action>
-  <action name="actionTest">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Test</string>
-   </property>
-   <property name="visible">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionExit">
@@ -287,6 +194,36 @@
   <action name="actionSafe_data">
    <property name="text">
     <string>Safe data</string>
+   </property>
+  </action>
+  <action name="actionCO2_Sensor">
+   <property name="text">
+    <string>CO2 Sensor</string>
+   </property>
+  </action>
+  <action name="actionPIR_Sensor">
+   <property name="text">
+    <string>PIR Sensor</string>
+   </property>
+  </action>
+  <action name="actionAirflow">
+   <property name="text">
+    <string>Airflow</string>
+   </property>
+  </action>
+  <action name="actionLightstate">
+   <property name="text">
+    <string>Lightstate</string>
+   </property>
+  </action>
+  <action name="actionTemperature">
+   <property name="text">
+    <string>Temperature</string>
+   </property>
+  </action>
+  <action name="actionFill_Empty_Cells">
+   <property name="text">
+    <string>Fill Empty Cells</string>
    </property>
   </action>
  </widget>

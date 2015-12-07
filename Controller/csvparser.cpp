@@ -6,9 +6,9 @@
 #include <iostream>
 
 
-void CSVParser::parseConfigFile(string file, map<int, bool>& booleanColumns)
+void CSVParser::parseConfigFile(string file)
 {
-    if(!ifstream(file.c_str()))
+    /*if(!ifstream(file.c_str()))
     {
         cout << "new config file created!";
         ofstream newFile;
@@ -21,13 +21,13 @@ void CSVParser::parseConfigFile(string file, map<int, bool>& booleanColumns)
     {
         int temp = atoi(line.c_str());
         booleanColumns[temp] = true;
-    }
+    }*/
 }
 
 bool CSVParser::parseFile(ifstream* file, string configFileName, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns)
 {
     bool success = true;
-    parseConfigFile(configFileName, booleanColumns);
+    parseConfigFile(configFileName);
 
     string line;
     //get all column names;

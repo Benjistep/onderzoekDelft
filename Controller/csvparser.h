@@ -14,7 +14,7 @@ class CSVParser {
 
 public:
     static bool parseFile(ifstream* file, string configFileName, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns);
-    static void parseConfigFile(string configFileName, map<int, bool>& booleanColumns);
+    static void parseConfigFile(string configFileName);
 };
 
 #endif // CSVPARSER_H

@@ -3,6 +3,8 @@
 #include "../Controller/CSVParser.h"
 #include "DataCell.h"
 
+CSVVector::CSVVector(): data(), columnHeaders(), rowHeaders(), booleanColumns(), success(true) {}
+
 CSVVector::CSVVector(string file, string delimiter)
 {
     success = CSVParser::parseFile(new ifstream(file.c_str()), "config.txt", data, columnHeaders, rowHeaders, delimiter, booleanColumns);
@@ -61,15 +63,21 @@ QString CSVVector::getString(int row, int column) const
 
 QString CSVVector::getColumnHeader(int column) const
 {
-    if(column >= columnHeaders.size() || column + 2 >= columnHeaders.size())
+    if((unsigned int)column >= columnHeaders.size() || (unsigned int)column + 2 >= columnHeaders.size())
         return QString("Not available");
     else
         return QString::fromStdString(columnHeaders[column+2]);
 }
 
+void CSVVector::setColumnHeader(int column, const string& newname)
+{
+    if(columnHeaders.size() > 2)
+        columnHeaders[column+2] = newname;
+}
+
 QString CSVVector::getRowHeader(int row) const
 {
-    if(row >= rowHeaders.size())
+    if((unsigned int)row >= rowHeaders.size())
         return QString("Not available");
     else
         return rowHeaders[row].toString("ddd d MMMM yy - hh:mm");
@@ -96,26 +104,18 @@ void CSVVector::fillEmptyCells()
     for(int column = 0; column < columns(); column++)
     {
         if(isBooleanColumn(column))
-        {
             fillBooleanColumn(column);
-        }
         else
-        {
             fillColumn(column);
-        }
     }
 }
 
 bool CSVVector::isBooleanColumn(int column)
 {
-    if(column >= booleanColumns.size())
-    {
+    if((unsigned int)column >= booleanColumns.size())
         return false;
-    }
     else
-    {
         return booleanColumns[column];
-    }
 }
 
 void CSVVector::setBooleanColumn(int column)
@@ -126,7 +126,9 @@ void CSVVector::setBooleanColumn(int column)
 void CSVVector::removeBooleanColumn(int column)
 {
     map<int, bool>::iterator it = booleanColumns.find(column);
-    booleanColumns.erase(it);
+
+    if(it != booleanColumns.end())
+        booleanColumns.erase(it);
 }
 
 const map<int, bool>& CSVVector::getBooleanColumns() const
@@ -145,7 +147,6 @@ void CSVVector::fillBooleanColumn(int column)
             if(row == 0)
             {
               set(row, column, opvulWaarde);
-
             }
             else if(row > 0)
             {
@@ -190,7 +191,8 @@ void CSVVector::fillColumn(int column)
 
 void CSVVector::removeRow(int row)
 {
-    if(row >= data.size())
+
+    if((unsigned int)row >= data.size())
     {
         data.erase(data.begin() + row);
     }
@@ -199,14 +201,10 @@ void CSVVector::removeRow(int row)
 bool CSVVector::elementExists(int row, int column) const
 {
     bool exists = true;
-    if(row >= data.size())
-    {
+    if((unsigned int)row >= data.size())
         exists = false;
-    }
-    else if(column >= data[row].size())
-    {
+    else if((unsigned int)column >= data[row].size())
         exists = false;
-    }
 
     return exists;
 }

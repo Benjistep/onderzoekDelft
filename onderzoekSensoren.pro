@@ -22,13 +22,14 @@ SOURCES += main.cpp\
     	Model\csvvector.cpp \
     	Controller\datetimeparser.cpp \
     Controller/csvwriter.cpp \
-    Controller/function.cpp \
-    Controller/sum.cpp \
-    Controller/average.cpp \
-    Controller/max.cpp \
-    Controller/min.cpp \
-    Controller/variance.cpp \
-    Controller/deviation.cpp
+    Functions/function.cpp \
+    Functions/sum.cpp \
+    Functions/average.cpp \
+    Functions/max.cpp \
+    Functions/min.cpp \
+    Functions/variance.cpp \
+    Functions/deviation.cpp \
+    Controller/analyser.cpp
 
 HEADERS  += View\mainwindow.h\
 	Controller\csvparser.h\
@@ -42,13 +43,14 @@ HEADERS  += View\mainwindow.h\
         Bayes\graph.h\
         Bayes\graph_utils.h\
     Controller/csvwriter.h \
-    Controller/function.h \
-    Controller/sum.h \
-    Controller/average.h \
-    Controller/max.h \
-    Controller/min.h \
-    Controller/variance.h \
-    Controller/deviation.h
+    Functions/function.h \
+    Functions/sum.h \
+    Functions/average.h \
+    Functions/max.h \
+    Functions/min.h \
+    Functions/variance.h \
+    Functions/deviation.h \
+    Controller/analyser.h
 
 FORMS    += View\mainwindow.ui
 

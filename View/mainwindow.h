@@ -30,19 +30,26 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_4_clicked();
-
     void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
+    void on_actionCO2_Sensor_triggered();
+
+    void on_actionPIR_Sensor_triggered();
+
+    void on_actionAirflow_triggered();
+
+    void on_actionLightstate_triggered();
+
+    void on_actionTemperature_triggered();
+
+    void on_actionFill_Empty_Cells_triggered();
 
 private:
     Ui::MainWindow *ui;
     CSVVector* csvvector;
+    void refreshTableModel();
+    void setColumnName(const string& newname, bool boolcol);
 };
 
 #endif // MAINWINDOW_H

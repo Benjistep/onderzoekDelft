@@ -178,7 +178,14 @@
     <addaction name="menuSet_Column_To_Type"/>
     <addaction name="actionFill_Empty_Cells"/>
    </widget>
+   <widget class="QMenu" name="menuAnalyse">
+    <property name="title">
+     <string>Analyse</string>
+    </property>
+    <addaction name="actionAnalyse_selected_cells"/>
+   </widget>
    <addaction name="menuOnderzoek_Delft"/>
+   <addaction name="menuAnalyse"/>
    <addaction name="menuOptions"/>
   </widget>
   <action name="actionAdd_File">
@@ -224,6 +231,11 @@
   <action name="actionFill_Empty_Cells">
    <property name="text">
     <string>Fill Empty Cells</string>
+   </property>
+  </action>
+  <action name="actionAnalyse_selected_cells">
+   <property name="text">
+    <string>Analyse selected cells</string>
    </property>
   </action>
  </widget>

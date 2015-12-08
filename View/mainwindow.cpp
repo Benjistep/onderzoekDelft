@@ -11,10 +11,7 @@
 #include <fstream>
 #include <QDateTime>
 #include <QMessageBox>
-#include "Functions/deviation.h"
-#include "Functions/sum.h"
-#include "Functions/variance.h"
-#include "Functions/average.h"
+#include "Controller/analyser.h"
 
 using namespace std;
 
@@ -192,5 +189,17 @@ void MainWindow::on_actionFill_Empty_Cells_triggered()
     if(csvvector){
         csvvector->fillEmptyCells();
         refreshTableModel();
+    }
+}
+
+void MainWindow::on_actionAnalyse_selected_cells_triggered()
+{
+    if(csvvector)
+    {
+        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+        vector<Result*> resultList;
+        Analyser::analyse(*csvvector, indexList, resultList);
+
+        cout << "Resultlist length is : " << resultList.size() << endl;
     }
 }

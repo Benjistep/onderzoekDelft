@@ -6,7 +6,7 @@
 class Variance : public Function
 {
 public:
-    static float calc(int rowStart, int rowEnd, int columnStart, int columnEnd, CSVVector &data);
+    static float calc(std::vector<float>& data);
 };
 
 #endif // VARIANCE_H

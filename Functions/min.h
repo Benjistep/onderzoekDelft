@@ -6,7 +6,7 @@
 class Min : public Function
 {
 public:
-    static float calc(int rowStart, int rowEnd, int columnStart, int columnEnd, CSVVector &data);
+    static float calc(std::vector<float>& data);
 };
 
 #endif // MIN_H

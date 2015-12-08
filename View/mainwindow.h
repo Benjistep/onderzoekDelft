@@ -45,6 +45,8 @@ private slots:
 
     void on_actionFill_Empty_Cells_triggered();
 
+    void on_actionAnalyse_selected_cells_triggered();
+
 private:
     Ui::MainWindow *ui;
     CSVVector* csvvector;

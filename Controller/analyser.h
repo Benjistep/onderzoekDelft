@@ -4,14 +4,15 @@
 #include <vector>
 #include <QDateTime>
 #include "../Model/csvvector.h"
+#include <QModelIndexList>
+#include "result.h"
 
 class Analyser
 {
 private:
 
 public:
-    Analyser();
-    void analyse(CSVVector& data);
+    static void analyse(CSVVector& data, QModelIndexList& indexList, vector<Result*>& resultList);
 };
 
 #endif // ANALYSER_H

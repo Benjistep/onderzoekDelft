@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     Functions/min.cpp \
     Functions/variance.cpp \
     Functions/deviation.cpp \
-    Controller/analyser.cpp
+    Controller/analyser.cpp \
+    Controller/result.cpp
 
 HEADERS  += View\mainwindow.h\
 	Controller\csvparser.h\
@@ -50,7 +51,8 @@ HEADERS  += View\mainwindow.h\
     Functions/min.h \
     Functions/variance.h \
     Functions/deviation.h \
-    Controller/analyser.h
+    Controller/analyser.h \
+    Controller/result.h
 
 FORMS    += View\mainwindow.ui
 

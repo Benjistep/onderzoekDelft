@@ -12,13 +12,19 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include "Controller/analyser.h"
+#include "../Situations/Settings/co2setting.h"
+#include "../Situations/Settings/airflowsetting.h"
+#include "../Situations/Settings/lightsetting.h"
+#include "../Situations/Settings/pirsetting.h"
+#include "../Situations/Settings/temperaturesetting.h"
 
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    csvvector(0)
+    csvvector(0),
+    situations()
 {
 
     ui->setupUi(this);
@@ -70,11 +76,19 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionSafe_data_triggered()
 {
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save a .csv file"), "C://", ".csv files (*.csv))");
-    if(filename != "")
+    if(csvvector)
     {
-        string file = filename.toStdString();
-        CSVWriter::write(*csvvector, file);
+        QString filename = QFileDialog::getSaveFileName(this, tr("Save a .csv file"), "C://", ".csv files (*.csv))");
+        if(filename != "")
+        {
+            string file = filename.toStdString();
+            CSVWriter::write(*csvvector, file);
+        }
+        QMessageBox::information(this, tr("Save"), tr("Saved successfully!"));
+    }
+    else
+    {
+        QMessageBox::information(this, tr("Save"), tr("Nothing to save."));
     }
 }
 
@@ -87,7 +101,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     int startuur = ui->horizontalSlider->value();
-    int stopuur = ui->horizontalSlider_2->value();
+    int stopuur = ui->horizontalSlider_2->value()-1;
 
     bool noweekends = ui->checkBox->isChecked();
 
@@ -137,7 +151,7 @@ void MainWindow::on_pushButton_6_clicked()
 
 void MainWindow::on_actionCO2_Sensor_triggered()
 {
-    setColumnName("C02Sensor", false);
+    setColumnName("CO2Sensor", false);
 }
 
 void MainWindow::on_actionPIR_Sensor_triggered()
@@ -196,10 +210,115 @@ void MainWindow::on_actionAnalyse_selected_cells_triggered()
 {
     if(csvvector)
     {
-        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
-        vector<Result*> resultList;
-        Analyser::analyse(*csvvector, indexList, resultList);
+        csvvector->fillEmptyCells();
+        refreshTableModel();
 
-        cout << "Resultlist length is : " << resultList.size() << endl;
+        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+        Situation* situation = Analyser::analyse(*csvvector, indexList, situations);
+
+        if(situation)
+        {
+            QString str("Situation match!\n");
+            ui->textEdit->setText(str);
+            ui->textEdit->append(situation->toString());
+        }
+        else
+        {
+            QString str("UNKNOWN SITUATION!!\n");
+            ui->textEdit->setText(str);
+        }
+
     }
 }
+
+void MainWindow::on_ClearButton_clicked()
+{
+    ui->textEdit->clear();
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    QString number = QString("%1").arg(value, 2, 10, QChar('0'));
+    QString temp = QString("%1: %2:00").arg("StartTime", number);
+    ui->label_2->setText(temp);
+}
+
+void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+{
+    QString number = QString("%1").arg(value, 2, 10, QChar('0'));
+    QString temp = QString("%1: %2:00").arg("EndTime", number);
+    ui->label_3->setText(temp);
+}
+
+void MainWindow::on_dialPPM_valueChanged(int value)
+{
+    ui->lcdNumberPPM->display(value);
+}
+
+void MainWindow::on_dial_2_valueChanged(int value)
+{
+    ui->lcdNumberPPM_2->display(value);
+}
+
+void MainWindow::on_dialTemp_valueChanged(int value)
+{
+    ui->lcdNumberTemperature->display(value);
+}
+
+void MainWindow::on_dial_3_valueChanged(int value)
+{
+    ui->lcdNumberAirflow->display(value);
+}
+
+void MainWindow::on_buttonAddSituation_clicked()
+{
+    //Situation name
+    QString name = ui->textEditSituationName->toPlainText();
+    Situation* sit = new Situation(name);
+
+    //Co2 values --------------------------------------------------------
+    int maxAcceptableC02 = (int) ui->lcdNumberPPM->value();
+    int deviationC02 = (int) ui->lcdNumberPPM_2->value();
+    bool C02maxAcceptViolated = ui->checkC02MaxV->isChecked();
+    bool C02devViolated = ui->checkC02DevV->isChecked();
+    bool C02notNull = ui->checkC02NotNull->isChecked();
+    bool C02const = ui->checkC02Const->isChecked();
+    CO2Setting* co2Setting = new CO2Setting(maxAcceptableC02, deviationC02, C02maxAcceptViolated, C02devViolated, C02notNull, C02const);
+    QString settingName("CO2Sensor");
+    sit->addSetting(co2Setting, settingName);
+
+    //temperature values
+    int maxTemperature = (int) ui->lcdNumberTemperature->value();
+    bool maxTempViolated = ui->checkMaxTempV->isChecked();
+    bool tempNotNull = ui->checkTempNotNull->isChecked();
+    TemperatureSetting* temperatureSetting = new TemperatureSetting(maxTemperature, maxTempViolated, tempNotNull);
+    settingName = "Temperature";
+    sit->addSetting(temperatureSetting, settingName);
+
+    //airflow values
+    int maxAirflowDev = (int) ui->lcdNumberAirflow->value();
+    bool maxAirflowDevV = ui->checkMaxAirflowV->isChecked();
+    bool airflowNotNull = ui->checkAirflowNotNull->isChecked();
+    AirflowSetting* airflowSetting = new AirflowSetting(maxAirflowDev, maxAirflowDevV, airflowNotNull);
+    settingName = "Airflow";
+    sit->addSetting(airflowSetting, settingName);
+
+    //light values
+    bool lightsOn = ui->checkLightsOn->isChecked();
+    LightSetting* lightSetting = new LightSetting(lightsOn);
+    settingName = "Lightstate";
+    sit->addSetting(lightSetting, settingName);
+
+    //pir values
+    bool pirOn = ui->checkPirOn->isChecked();
+    PIRSetting* pirSetting = new PIRSetting(pirOn);
+    settingName = "PIRSensor";
+    sit->addSetting(pirSetting, settingName);
+
+    //add to situations list
+    situations.push_back(sit);
+
+    ui->textEditSituations->append(sit->toString());
+}
+
+

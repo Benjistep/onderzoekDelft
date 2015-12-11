@@ -30,7 +30,15 @@ SOURCES += main.cpp\
     Functions/variance.cpp \
     Functions/deviation.cpp \
     Controller/analyser.cpp \
-    Controller/result.cpp
+    Controller/result.cpp \
+    Functions/count.cpp \
+	Situations/Settings/setting.cpp \
+    Situations/situation.cpp \
+    Situations/Settings/co2setting.cpp \
+    Situations/Settings/temperaturesetting.cpp \
+    Situations/Settings/airflowsetting.cpp \
+    Situations/Settings/lightsetting.cpp \
+    Situations/Settings/pirsetting.cpp
 
 HEADERS  += View\mainwindow.h\
 	Controller\csvparser.h\
@@ -39,10 +47,6 @@ HEADERS  += View\mainwindow.h\
 	Controller\stringsplitter.h\
     	Model\csvvector.h \
         Controller\datetimeparser.h\
-        Bayes\bayes_utils.h\
-        Bayes\directed_graph.h\
-        Bayes\graph.h\
-        Bayes\graph_utils.h\
     Controller/csvwriter.h \
     Functions/function.h \
     Functions/sum.h \
@@ -52,7 +56,15 @@ HEADERS  += View\mainwindow.h\
     Functions/variance.h \
     Functions/deviation.h \
     Controller/analyser.h \
-    Controller/result.h
+    Controller/result.h \
+    Functions/count.h \
+    Situations/Settings/setting.h \
+    Situations/situation.h \
+    Situations/Settings/co2setting.h \
+    Situations/Settings/temperaturesetting.h \
+    Situations/Settings/airflowsetting.h \
+    Situations/Settings/lightsetting.h \
+    Situations/Settings/pirsetting.h
 
 FORMS    += View\mainwindow.ui
 

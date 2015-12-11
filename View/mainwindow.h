@@ -5,6 +5,8 @@
 #include <QTableView>
 #include <QString>
 #include "../Model/csvvector.h"
+#include "../Situations/situation.h"
+#include <vector>
 
 namespace Ui {
 class MainWindow;
@@ -47,9 +49,29 @@ private slots:
 
     void on_actionAnalyse_selected_cells_triggered();
 
+    void on_ClearButton_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_horizontalSlider_2_valueChanged(int value);
+
+    void on_dialPPM_valueChanged(int value);
+
+    void on_dial_2_valueChanged(int value);
+
+    void on_dial_5_valueChanged(int value);
+
+    void on_dial_3_valueChanged(int value);
+
+    void on_buttonAddSituation_clicked();
+
+    void on_dialTemp_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     CSVVector* csvvector;
+    std::vector<Situation*> situations;
+
     void refreshTableModel();
     void setColumnName(const string& newname, bool boolcol);
 };

@@ -59,13 +59,19 @@ private slots:
 
     void on_dial_2_valueChanged(int value);
 
-    void on_dial_5_valueChanged(int value);
+    //void on_dial_5_valueChanged(int value);
 
     void on_dial_3_valueChanged(int value);
 
     void on_buttonAddSituation_clicked();
 
     void on_dialTemp_valueChanged(int value);
+
+    void on_actionHide_Selected_Cells_triggered();
+
+    void on_actionHide_Selected_Rows_triggered();
+
+    void on_actionShow_All_Hidden_Cells_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -95,7 +95,6 @@ void MainWindow::on_actionSafe_data_triggered()
 //fill empty cells
 void MainWindow::on_pushButton_clicked()
 {
-
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -210,21 +209,20 @@ void MainWindow::on_actionAnalyse_selected_cells_triggered()
 {
     if(csvvector)
     {
+        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
         csvvector->fillEmptyCells();
         refreshTableModel();
-
-        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
         Situation* situation = Analyser::analyse(*csvvector, indexList, situations);
 
         if(situation)
         {
-            QString str("Situation match!\n");
+            QString str("Situation match.\n");
             ui->textEdit->setText(str);
             ui->textEdit->append(situation->toString());
         }
         else
         {
-            QString str("UNKNOWN SITUATION!!\n");
+            QString str("Unknown Situation.\n");
             ui->textEdit->setText(str);
         }
 
@@ -322,3 +320,47 @@ void MainWindow::on_buttonAddSituation_clicked()
 }
 
 
+
+void MainWindow::on_actionHide_Selected_Cells_triggered()
+{
+    if(csvvector)
+    {
+        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+        for (int i = 0; i < indexList.size(); i++)
+        {
+            ui->tableView->hideColumn(indexList[i].column());
+        }
+
+    }
+}
+
+void MainWindow::on_actionHide_Selected_Rows_triggered()
+{
+    if(csvvector)
+    {
+        QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
+        for (int i = 0; i < indexList.size(); i++)
+        {
+            ui->tableView->hideRow(indexList[i].row());
+        }
+
+    }
+}
+
+void MainWindow::on_actionShow_All_Hidden_Cells_triggered()
+{
+    if(csvvector)
+    {
+        for(int i = 0; i < csvvector->columns(); i++)
+        {
+            if(ui->tableView->isColumnHidden(i))
+                ui->tableView->showColumn(i);
+        }
+
+        for(int i = 0; i < csvvector->rows(); i++)
+        {
+            if(ui->tableView->isRowHidden(i))
+                ui->tableView->showRow(i);
+        }
+    }
+}

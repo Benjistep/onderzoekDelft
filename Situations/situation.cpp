@@ -1,6 +1,6 @@
 #include "situation.h"
 
-Situation::Situation(QString name): name(name)
+Situation::Situation(QString name): name(name), settings()
 {
 
 }
@@ -17,7 +17,8 @@ void Situation::addSetting(Setting* setting, QString& name)
 
 Setting* Situation::getSetting(const QString& name)
 {
-    if(settings.find(name) != settings.end())
+
+    if(settings.count(name) >= 1)
         return settings[name];
     else
         return NULL;

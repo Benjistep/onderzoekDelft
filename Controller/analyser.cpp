@@ -12,6 +12,11 @@
 
 Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector<Situation*>& situations)
 {
+    int size = indexList.size();
+
+    if(size == 0)
+        return NULL;
+
     //selects all data from given indexes
     map<int, vector<float>*>* allData = selectData(data, indexList);
 
@@ -19,14 +24,18 @@ Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector
     map<int, vector<float>*>::const_iterator mapIt = allData->begin();
 
     Situation* tempSit = NULL;
+    Situation* checkSit = NULL;
 
     //loop trough all situations
     for (unsigned int index = 0; index < situations.size(); index++)
     {
-        tempSit = situations[index];
+        checkSit = situations[index];
 
-        if(situationMatch(*tempSit, data, allData))
+        if(situationMatch(*checkSit, data, allData))
+        {
+            tempSit = checkSit;
             break;
+        }
     }
 
     //cleanup

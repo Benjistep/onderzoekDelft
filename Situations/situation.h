@@ -9,7 +9,7 @@ class Situation
 {
 private:
     QString name;
-    std::map<QString, Setting*> settings;
+    std::map<const QString, Setting*> settings;
 
 public:
     Situation(QString name);

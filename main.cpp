@@ -1,12 +1,11 @@
 #include "View/mainwindow.h"
 #include <QApplication>
-#include <iostream>
-#include <QDateTime>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+    //test
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

@@ -2,6 +2,7 @@
 #include "../../Functions/average.h"
 #include "../../Functions/deviation.h"
 #include "../../Functions/max.h"
+#include "../../Functions/count.h"
 #include <iostream>
 
 CO2Setting::CO2Setting(int maxAcceptable, int deviation, bool maxViolated, bool deviationViolated, bool notNull, bool constantValue):
@@ -19,7 +20,7 @@ QString CO2Setting::toString()
 {
     return QString("CO2: maxAcceptable: ") + QString::number(maxAcceptable) +
             QString(", maxDeviation: ") + QString::number(deviation) +
-            QString(", maxVioled: ") + QString::number(maxViolated) +
+            QString(", maxViolated: ") + QString::number(maxViolated) +
             QString(", deviationViolated: ") + QString::number(deviationViolated) +
             QString(", Functioning: ") + QString::number(notNull) +
             QString(", constantValue: ") + QString::number(constantValue);
@@ -31,6 +32,7 @@ bool CO2Setting::check(std::vector<float>& data)
     float average = Average::calc(data);
     float dev = Deviation::calc(data);
     float max = Max::calc(data);
+    int count = Count::calc(data);
 
     //max co2
     if(max > maxAcceptable && !maxViolated)
@@ -71,18 +73,19 @@ bool CO2Setting::check(std::vector<float>& data)
         return false;
     }
 
-
-    //constant value check
-    if(dev == 0.0 && !constantValue)
+    //if more than 1 item
+    if(count > 1)
     {
-        return false;
+        //constant value check
+        if(dev == 0.0 && !constantValue)
+        {
+            return false;
+        }
+        else if(dev != 0.0 && constantValue)
+        {
+            return false;
+        }
     }
-    else if(dev != 0.0 && constantValue)
-    {
-        return false;
-    }
-
-
     return true;
 }
 

@@ -17,6 +17,7 @@
 #include "../Situations/Settings/lightsetting.h"
 #include "../Situations/Settings/pirsetting.h"
 #include "../Situations/Settings/temperaturesetting.h"
+#include "Controller/situationreader.h"
 
 using namespace std;
 
@@ -24,10 +25,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     csvvector(0),
-    situations()
+    situations(SituationReader::Read("situations.xml"))
 {
 
     ui->setupUi(this);
+
+    if(situations)
+    {
+        for (unsigned int i = 0; i < situations->size(); i++)
+        {
+            ui->textEditSituations->append((*situations)[i]->toString());
+        }
+    }
 }
 
 MainWindow::~MainWindow()
@@ -212,7 +221,7 @@ void MainWindow::on_actionAnalyse_selected_cells_triggered()
         QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
         csvvector->fillEmptyCells();
         refreshTableModel();
-        Situation* situation = Analyser::analyse(*csvvector, indexList, situations);
+        Situation* situation = Analyser::analyse(*csvvector, indexList, *situations);
 
         if(situation)
         {
@@ -314,7 +323,7 @@ void MainWindow::on_buttonAddSituation_clicked()
     sit->addSetting(pirSetting, settingName);
 
     //add to situations list
-    situations.push_back(sit);
+    situations->push_back(sit);
 
     ui->textEditSituations->append(sit->toString());
 }

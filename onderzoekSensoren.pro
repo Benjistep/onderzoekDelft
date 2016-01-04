@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     Situations/Settings/temperaturesetting.cpp \
     Situations/Settings/airflowsetting.cpp \
     Situations/Settings/lightsetting.cpp \
-    Situations/Settings/pirsetting.cpp
+    Situations/Settings/pirsetting.cpp \
+    Controller/situationreader.cpp
 
 HEADERS  += View\mainwindow.h\
 	Controller\csvparser.h\
@@ -64,7 +65,8 @@ HEADERS  += View\mainwindow.h\
     Situations/Settings/temperaturesetting.h \
     Situations/Settings/airflowsetting.h \
     Situations/Settings/lightsetting.h \
-    Situations/Settings/pirsetting.h
+    Situations/Settings/pirsetting.h \
+    Controller/situationreader.h
 
 FORMS    += View\mainwindow.ui
 

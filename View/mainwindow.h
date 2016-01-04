@@ -76,7 +76,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     CSVVector* csvvector;
-    std::vector<Situation*> situations;
+    std::vector<Situation*>* situations;
 
     void refreshTableModel();
     void setColumnName(const string& newname, bool boolcol);

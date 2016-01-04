@@ -59,16 +59,20 @@ bool Analyser::situationMatch(Situation& situation, CSVVector &data, map<int, ve
     map<int, vector<float>*>::const_iterator mapIt = allData->begin();
 
     bool match = true;
-
+    std::cout << "Check situation" << std::endl;
     //loop trough map
     while (mapIt != allData->end())
     {
+        std::cout << "hier" << std::endl;
         QString columnName = data.getColumnHeader(mapIt->first);
         Setting* tempsetting = situation.getSetting(columnName);
 
         if(tempsetting)
         {
             match = tempsetting->check(*(mapIt->second));
+            std::cout << "setting name: " << tempsetting->toString().toStdString() << std::endl;
+            std::cout << "match setting: " << match << std::endl;
+
         }
         else
         {
@@ -77,6 +81,9 @@ bool Analyser::situationMatch(Situation& situation, CSVVector &data, map<int, ve
 
         //increment alldata iterator
         mapIt++;
+
+        if(!match)
+            break;
     }
 
     return match;
@@ -107,27 +114,3 @@ map<int, vector<float>*>* Analyser::selectData(CSVVector &data, QModelIndexList 
 
      return allData;
 }
-
-/*
- //does calculations on selected data
-void Analyser::calcResult(CSVVector &data, map<int, vector<float>*>* allData, vector<Result*>& resultList)
-{
-    map<int, vector<float>*>::const_iterator mapIt = allData->begin();
-    while(mapIt != allData->end())
-    {
-        string name = data.getColumnHeader(mapIt->first).toStdString();
-        float average = Average::calc(*mapIt->second);
-        float deviation = Deviation::calc(*mapIt->second);
-        float max = Max::calc(*mapIt->second);
-        float min = Min::calc(*mapIt->second);
-        float sum = Sum::calc(*mapIt->second);
-        float variance = Variance::calc(*mapIt->second);
-        int count = Count::calc(*mapIt->second);
-
-        Result* tempResult = new Result(name, average, deviation, max, min, sum, variance, count);
-        resultList.push_back(tempResult);
-
-        mapIt++;
-    }
-}
-*/

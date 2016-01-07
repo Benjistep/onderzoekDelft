@@ -15,7 +15,7 @@ int MyModel::rowCount(const QModelIndex &parent) const
 
 int MyModel::columnCount(const QModelIndex &parent) const
 {
-        return modelData.columns() - 1;
+        return modelData.columns();
 }
 
 QVariant MyModel::data(const QModelIndex &index, int role) const

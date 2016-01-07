@@ -11,11 +11,12 @@
 class Analyser
 {
 private:
-    static map<int, vector<float>*>* selectData(CSVVector &data, QModelIndexList &indexList);
-    static void calcResult(CSVVector &data, map<int, vector<float>*>* allData, vector<Result*>& resultList);
-    static bool situationMatch(Situation& situation, CSVVector& data, map<int, vector<float>*>* allData);
+    static map<int, vector<float>*> selectData(CSVVector &data, QModelIndexList &indexList);
+    static map<int, Result*> calcResults(map<int, vector<float>*>& data, CSVVector& CSVdata);
+    static bool situationMatch(Situation& situation, CSVVector& data, map<int, Result*>& results);
+
 public:
-    static Situation* analyse(CSVVector& data, QModelIndexList& indexList, vector<Situation*>& situations);
+    static Situation* analyse(CSVVector& data, QModelIndexList& indexList, vector<Situation*>& situations, map<int, Result*>& results);
 };
 
 #endif // ANALYSER_H

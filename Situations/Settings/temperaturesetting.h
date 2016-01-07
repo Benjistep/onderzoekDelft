@@ -13,7 +13,7 @@ private:
 public:
     TemperatureSetting(int maxTemp, bool maxTempV, bool tempNotNull);
     QString toString();
-    bool check(std::vector<float>& data);
+    bool check(Result& result);
 };
 
 #endif // TEMPERATURESETTING_H

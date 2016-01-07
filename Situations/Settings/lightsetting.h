@@ -11,7 +11,7 @@ private:
 public:
     LightSetting(bool lightsOn);
     QString toString();
-    bool check(std::vector<float>& data);
+    bool check(Result& result);
 };
 
 #endif // LIGHTSETTING_H

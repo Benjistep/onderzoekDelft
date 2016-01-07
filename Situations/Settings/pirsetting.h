@@ -10,7 +10,7 @@ private:
 public:
     PIRSetting(bool functioning);
     QString toString();
-    bool check(std::vector<float>& data);
+    bool check(Result& result);
 };
 
 #endif // PIRSETTING_H

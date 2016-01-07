@@ -18,6 +18,7 @@
 #include "../Situations/Settings/pirsetting.h"
 #include "../Situations/Settings/temperaturesetting.h"
 #include "Controller/situationreader.h"
+#include "Controller/result.h"
 
 using namespace std;
 
@@ -36,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             ui->textEditSituations->append((*situations)[i]->toString());
         }
+    }
+    else
+    {
+        situations = new std::vector<Situation*>;
     }
 }
 
@@ -221,7 +226,8 @@ void MainWindow::on_actionAnalyse_selected_cells_triggered()
         QModelIndexList indexList = ui->tableView->selectionModel()->selectedIndexes();
         csvvector->fillEmptyCells();
         refreshTableModel();
-        Situation* situation = Analyser::analyse(*csvvector, indexList, *situations);
+        map<int, Result*> results;
+        Situation* situation = Analyser::analyse(*csvvector, indexList, *situations, results);
 
         if(situation)
         {
@@ -233,6 +239,14 @@ void MainWindow::on_actionAnalyse_selected_cells_triggered()
         {
             QString str("Unknown Situation.\n");
             ui->textEdit->setText(str);
+        }
+        ui->textEdit->append("CALCULATIONS:");
+        //print calculations
+        map<int, Result*>::iterator resultIt = results.begin();
+        while(resultIt != results.end())
+        {
+            ui->textEdit->append(QString::fromStdString(resultIt->second->toString()));
+            resultIt++;
         }
 
     }

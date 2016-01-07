@@ -1,5 +1,4 @@
 #include "pirsetting.h"
-#include "../../Functions/average.h"
 
 PIRSetting::PIRSetting(bool functioning): _functioning(functioning)
 {
@@ -10,9 +9,9 @@ QString PIRSetting::toString()
     return QString("PIR: Functioning: ") + QString::number(_functioning);
 }
 
-bool PIRSetting::check(std::vector<float>& data)
+bool PIRSetting::check(Result& data)
 {
-    float average = Average::calc(data);
+    float average = data.getAverage();
 
     if(average >= 0.75 && !_functioning)
     {

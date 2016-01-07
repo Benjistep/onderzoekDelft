@@ -1,5 +1,6 @@
 #ifndef COUNT_H
 #define COUNT_H
+
 #include "function.h"
 class Count : public Function
 {

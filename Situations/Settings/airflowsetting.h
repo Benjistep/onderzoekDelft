@@ -13,7 +13,7 @@ private:
 public:
     AirflowSetting(int maxAirflow, bool maxV, bool notNull);
     QString toString();
-    bool check(std::vector<float>& data);
+    bool check(Result& result);
 };
 
 #endif // AIRFLOWSETTING_H

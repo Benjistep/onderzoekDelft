@@ -1,8 +1,4 @@
 #include "co2setting.h"
-#include "../../Functions/average.h"
-#include "../../Functions/deviation.h"
-#include "../../Functions/max.h"
-#include "../../Functions/count.h"
 #include <iostream>
 
 CO2Setting::CO2Setting(int maxAcceptable, int deviation, bool maxViolated, bool deviationViolated, bool notNull, bool constantValue):
@@ -27,12 +23,12 @@ QString CO2Setting::toString()
 }
 
 
-bool CO2Setting::check(std::vector<float>& data)
+bool CO2Setting::check(Result& data)
 {
-    float average = Average::calc(data);
-    float dev = Deviation::calc(data);
-    float max = Max::calc(data);
-    int count = Count::calc(data);
+    float average = data.getAverage();
+    float dev = data.getDeviation();
+    float max = data.getMax();
+    int count = data.getCount();
 
     //max co2
     if(max > maxAcceptable && !maxViolated)

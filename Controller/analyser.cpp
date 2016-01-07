@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../Situations/Settings/setting.h"
 
-Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector<Situation*>& situations)
+Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector<Situation*>& situations, map<int, Result*>& results)
 {
     int size = indexList.size();
 
@@ -18,10 +18,10 @@ Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector
         return NULL;
 
     //selects all data from given indexes
-    map<int, vector<float>*>* allData = selectData(data, indexList);
+    map<int, vector<float>*> allData = selectData(data, indexList);
 
-    //declare iterator of allData
-    map<int, vector<float>*>::const_iterator mapIt = allData->begin();
+    //performs multiple calculations per column, per column 1 Result
+    results = calcResults(allData, data);
 
     Situation* tempSit = NULL;
     Situation* checkSit = NULL;
@@ -31,53 +31,35 @@ Situation* Analyser::analyse(CSVVector& data, QModelIndexList& indexList, vector
     {
         checkSit = situations[index];
 
-        if(situationMatch(*checkSit, data, allData))
+        if(situationMatch(*checkSit, data, results))
         {
             tempSit = checkSit;
             break;
         }
     }
 
-    //cleanup
-    //remove all vectors
-    mapIt = allData->begin();
-    while(mapIt != allData->end())
-    {
-        delete(mapIt->second);
-        mapIt++;
-    }
-
-    delete allData;
 
     return tempSit;
-
 }
 
-bool Analyser::situationMatch(Situation& situation, CSVVector &data, map<int, vector<float>* >* allData)
+//checks if preprogrammed situation is similar to current situation
+bool Analyser::situationMatch(Situation& situation, CSVVector &data, map<int, Result*>& results)
 {
     //declare iterator of allData
-    map<int, vector<float>*>::const_iterator mapIt = allData->begin();
+    map<int, Result*>::iterator mapIt = results.begin();
 
     bool match = true;
     std::cout << "Check situation" << std::endl;
     //loop trough map
-    while (mapIt != allData->end())
+    while (mapIt != results.end())
     {
-        std::cout << "hier" << std::endl;
         QString columnName = data.getColumnHeader(mapIt->first);
         Setting* tempsetting = situation.getSetting(columnName);
 
         if(tempsetting)
-        {
             match = tempsetting->check(*(mapIt->second));
-            std::cout << "setting name: " << tempsetting->toString().toStdString() << std::endl;
-            std::cout << "match setting: " << match << std::endl;
-
-        }
         else
-        {
             match = false;
-        }
 
         //increment alldata iterator
         mapIt++;
@@ -89,10 +71,30 @@ bool Analyser::situationMatch(Situation& situation, CSVVector &data, map<int, ve
     return match;
 }
 
-//selects all data given certain indexes
-map<int, vector<float>*>* Analyser::selectData(CSVVector &data, QModelIndexList &indexList)
+//calculates for every column some functions. 1 result per column
+map<int, Result*> Analyser::calcResults(map<int, vector<float>*>& data, CSVVector &CSVdata)
 {
-     map<int, vector<float>*>* allData = new map<int, vector<float>*>;
+    map<int, Result*> results;
+
+    map<int, vector<float>*>::iterator dataIt = data.begin();
+
+    int i = 0;
+    while(dataIt != data.end())
+    {
+        vector<float>* tempData = dataIt->second;
+        std::string name = CSVdata.getColumnHeader(i).toStdString();
+        results[i] = new Result(*tempData, name);
+        i++;
+        dataIt++;
+    }
+
+    return results;
+}
+
+//selects all data given certain indexes
+map<int, vector<float>*> Analyser::selectData(CSVVector &data, QModelIndexList &indexList)
+{
+     map<int, vector<float>*> allData;
 
      QModelIndexList::const_iterator it = indexList.begin();
 
@@ -100,17 +102,18 @@ map<int, vector<float>*>* Analyser::selectData(CSVVector &data, QModelIndexList 
      {
          int column = it->column();
 
-         if(allData->find(column) != allData->end())
+         if(allData.find(column) != allData.end())
          {
            int row = it->row();
-           (*allData)[column]->push_back(data.get(row, column));
+           allData[column]->push_back(data.get(row, column));
            it++;
          }
          else
          {
-             (*allData)[column] = new vector<float>;
+             allData[column] = new vector<float>;
          }
      }
 
      return allData;
 }
+

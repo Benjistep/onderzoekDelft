@@ -1,6 +1,4 @@
 #include "temperaturesetting.h"
-#include "../../Functions/average.h"
-#include "../../Functions/max.h"
 #include <iostream>
 
 TemperatureSetting::TemperatureSetting(int maxTemp, bool maxTempV, bool tempNotNull):
@@ -17,11 +15,11 @@ QString TemperatureSetting::toString()
             QString(", Functioning: ") + QString::number(_tempNotNull);
 }
 
-bool TemperatureSetting::check(std::vector<float>& data)
+bool TemperatureSetting::check(Result& data)
 {
 
-    float average = Average::calc(data);
-    float max = Max::calc(data);
+    float average = data.getAverage();
+    float max = data.getMax();
 
     if(max > _maxTemp && !_maxTempV)
     {

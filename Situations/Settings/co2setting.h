@@ -14,7 +14,7 @@ private:
 public:
     CO2Setting(int maxAcceptable, int deviation, bool maxViolated,
                bool deviationViolated, bool notNull, bool constantValue);
-    bool check(std::vector<float>& data);
+    bool check(Result& result);
     QString toString();
 
 };

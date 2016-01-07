@@ -1,16 +1,27 @@
 #include "result.h"
+#include "../Functions/average.h"
+#include "../Functions/deviation.h"
+#include "../Functions/count.h"
+#include "../Functions/max.h"
+#include "../Functions/min.h"
+#include "../Functions/sum.h"
+#include "../Functions/variance.h"
 
-Result::Result(const std::string &name, float average, float deviation, float max, float min, float sum, float variance, int count):
-    name(name),
-    average(average),
-    deviation(deviation),
-    max(max),
-    min(min),
-    sum(sum),
-    variance(variance),
-    count(count)
+Result::Result(std::vector<float>& data, std::string name) :
+    name(name)
 {
+    calc(data);
+}
 
+void Result::calc(std::vector<float>& data)
+{
+    average = Average::calc(data);
+    deviation = Deviation::calc(data);
+    max = Max::calc(data);
+    min = Min::calc(data);
+    sum = Sum::calc(data);
+    variance = Variance::calc(data);
+    count = Count::calc(data);
 }
 
 float Result::getAverage()
@@ -48,15 +59,10 @@ int Result::getCount()
     return count;
 }
 
-std::string Result::getName()
-{
-    return name;
-}
 
 const std::string Result::toString()
 {
-    std::string result = "-----------------------------------------------------------------------------------------------------------------------\n"
-            + name + '\n';
+    std::string result = "-----" + name + "-----\n";
     result += "Count: " + std::to_string(count) + '\n';
     result += "Min: " + std::to_string(min) + '\n';
     result += "Max: " + std::to_string(max) + '\n';

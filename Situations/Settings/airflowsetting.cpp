@@ -1,6 +1,4 @@
 #include "airflowsetting.h"
-#include "../../Functions/average.h"
-#include "../../Functions/deviation.h"
 #include <iostream>
 
 
@@ -19,10 +17,10 @@ QString AirflowSetting::toString()
             QString(", Functioning: ") + QString::number(_notNull);
 }
 
-bool AirflowSetting::check(std::vector<float>& data)
+bool AirflowSetting::check(Result& data)
 {
-    float average = Average::calc(data);
-    float max = Deviation::calc(data);
+    float average = data.getAverage();
+    float max = data.getMax();
 
     if(max > _maxAirflow && !_maxAirflowV)
     {

@@ -7,7 +7,7 @@ CSVVector::CSVVector(): data(), columnHeaders(), rowHeaders(), booleanColumns(),
 
 CSVVector::CSVVector(string file, string delimiter)
 {
-    success = CSVParser::parseFile(new ifstream(file.c_str()), data, columnHeaders, rowHeaders, delimiter, booleanColumns);
+    success = CSVParser::parseFile(new ifstream(file.c_str()), data, columnHeaders, rowHeaders, delimiter);
 }
 
 float CSVVector::get(int row, int column)

@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-bool CSVParser::parseFile(ifstream* file, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter, map<int,bool>& booleanColumns)
+bool CSVParser::parseFile(ifstream* file, vector<vector<DataCell> >& data, vector<string>& columnHeaders, vector<QDateTime>& rowHeaders, string delimiter)
 {
     bool success = true;
 
